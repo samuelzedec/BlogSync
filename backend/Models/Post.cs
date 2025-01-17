@@ -10,5 +10,5 @@ public class Post
     public DateTime CreatedAt { get; set; }
     public DateTime ModifiedAt { get; set; }
     public List<Comment>? Comments { get; set; }
-    public List<Tag>? Tags { get; set; }
+    public List<Tag> Tags { get; set; } = new();
 }
