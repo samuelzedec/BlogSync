@@ -12,7 +12,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(BlogSyncDbContext))]
-    [Migration("20250116225808_StartingDatabase")]
+    [Migration("20250121010526_StartingDatabase")]
     partial class StartingDatabase
     {
         /// <inheritdoc />
@@ -64,10 +64,8 @@ namespace backend.Migrations
                         .HasColumnType("DATETIME")
                         .HasColumnName("CreatedAt");
 
-                    b.Property<DateTime>("ModifiedAt")
-                        .ValueGeneratedOnAdd()
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("DATETIME")
-                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
                         .HasColumnName("ModifiedAt");
 
                     b.Property<int>("PostId")
@@ -75,6 +73,9 @@ namespace backend.Migrations
 
                     b.HasKey("Id")
                         .HasName("PK_Comment_Id");
+
+                    b.HasIndex("AuthorName")
+                        .HasDatabaseName("IX_Comment_AuthorName");
 
                     b.HasIndex("PostId");
 
@@ -105,10 +106,8 @@ namespace backend.Migrations
                         .HasColumnType("DATETIME")
                         .HasColumnName("CreatedAt");
 
-                    b.Property<DateTime>("ModifiedAt")
-                        .ValueGeneratedOnAdd()
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("DATETIME")
-                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
                         .HasColumnName("ModifiedAt");
 
                     b.Property<string>("Slug")
@@ -146,11 +145,15 @@ namespace backend.Migrations
                         .HasColumnType("DATETIME")
                         .HasColumnName("CreatedAt");
 
-                    b.Property<DateTime>("ModifiedAt")
-                        .ValueGeneratedOnAdd()
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("DATETIME")
-                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
                         .HasColumnName("ModifiedAt");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("VARCHAR")
+                        .HasColumnName("Name");
 
                     b.Property<string>("Slug")
                         .IsRequired()
@@ -160,6 +163,10 @@ namespace backend.Migrations
 
                     b.HasKey("Id")
                         .HasName("PK_Tag_Id");
+
+                    b.HasIndex("Slug")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Tag_Slug");
 
                     b.ToTable("Tags");
                 });

@@ -60,8 +60,7 @@ public class PostMap : IEntityTypeConfiguration<Post>
         builder
             .Property(x => x.ModifiedAt)
             .HasColumnName("ModifiedAt")
-            .HasColumnType("DATETIME")
-            .HasDefaultValue(DateTime.MinValue);
+            .HasColumnType("DATETIME");
 
         builder
             .HasMany(x => x.Comments)

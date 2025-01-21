@@ -24,18 +24,28 @@ public class TagMap : IEntityTypeConfiguration<Tag>
             .HasColumnType("VARCHAR")
             .HasMaxLength(255)
             .IsRequired();
+        builder
+            .HasIndex(x => x.Slug)
+            .IsUnique()
+            .HasDatabaseName("IX_Tag_Slug");
+        
+        builder
+            .Property(x => x.Name)
+            .HasColumnName("Name")
+            .HasColumnType("VARCHAR")
+            .HasMaxLength(255)
+            .IsRequired();
 
         builder
             .Property(x => x.CreatedAt)
             .HasColumnName("CreatedAt")
             .HasColumnType("DATETIME")
             .IsRequired();
-        
+
         builder
             .Property(x => x.ModifiedAt)
             .HasColumnName("ModifiedAt")
-            .HasColumnType("DATETIME")
-            .HasDefaultValue(DateTime.MinValue);
+            .HasColumnType("DATETIME");
 
     }
 }

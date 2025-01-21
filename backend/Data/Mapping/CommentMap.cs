@@ -31,6 +31,9 @@ public class CommentMap : IEntityTypeConfiguration<Comment>
             .HasColumnType("NVARCHAR")
             .HasMaxLength(255)
             .IsRequired();
+        builder
+            .HasIndex(x => x.AuthorName)
+            .HasDatabaseName("IX_Comment_AuthorName");
 
         builder
             .Property(x => x.CreatedAt)
@@ -41,7 +44,6 @@ public class CommentMap : IEntityTypeConfiguration<Comment>
         builder
             .Property(x => x.ModifiedAt)
             .HasColumnName("ModifiedAt")
-            .HasColumnType("DATETIME")
-            .HasDefaultValue(DateTime.MinValue);
+            .HasColumnType("DATETIME");
     }
 }

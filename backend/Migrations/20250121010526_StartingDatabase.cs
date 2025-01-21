@@ -22,7 +22,7 @@ namespace backend.Migrations
                     AuthorName = table.Column<string>(type: "NVARCHAR(255)", maxLength: 255, nullable: false),
                     Slug = table.Column<string>(type: "VARCHAR(255)", maxLength: 255, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "DATETIME", nullable: false),
-                    ModifiedAt = table.Column<DateTime>(type: "DATETIME", nullable: false, defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
+                    ModifiedAt = table.Column<DateTime>(type: "DATETIME", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -35,9 +35,10 @@ namespace backend.Migrations
                 {
                     Id = table.Column<int>(type: "INT", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "VARCHAR(255)", maxLength: 255, nullable: false),
                     Slug = table.Column<string>(type: "VARCHAR(255)", maxLength: 255, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "DATETIME", nullable: false),
-                    ModifiedAt = table.Column<DateTime>(type: "DATETIME", nullable: false, defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
+                    ModifiedAt = table.Column<DateTime>(type: "DATETIME", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -53,7 +54,7 @@ namespace backend.Migrations
                     Content = table.Column<string>(type: "NVARCHAR(MAX)", nullable: false),
                     AuthorName = table.Column<string>(type: "NVARCHAR(255)", maxLength: 255, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "DATETIME", nullable: false),
-                    ModifiedAt = table.Column<DateTime>(type: "DATETIME", nullable: false, defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)),
+                    ModifiedAt = table.Column<DateTime>(type: "DATETIME", nullable: true),
                     PostId = table.Column<int>(type: "INT", nullable: false)
                 },
                 constraints: table =>
@@ -92,6 +93,11 @@ namespace backend.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comment_AuthorName",
+                table: "Comments",
+                column: "AuthorName");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Comments_PostId",
                 table: "Comments",
                 column: "PostId");
@@ -106,6 +112,12 @@ namespace backend.Migrations
                 name: "IX_PostTag_TagId",
                 table: "PostTag",
                 column: "TagId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tag_Slug",
+                table: "Tags",
+                column: "Slug",
+                unique: true);
         }
 
         /// <inheritdoc />
